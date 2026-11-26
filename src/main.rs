@@ -1,6 +1,5 @@
 use strum::IntoEnumIterator;
 use strum_macros::{Display, EnumIter};
-use std::{write, io::{self}};
 
 mod tic_tac_toe;
 
@@ -31,12 +30,12 @@ fn main() {
     let mut is_playing = true;
     let mut board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
-    let mut isPlayerX = true;
+    let mut is_player_x = true;
 
     while is_playing {
         clearscreen::clear().expect("Failed to clear screen");
         
-        if isPlayerX {
+        if is_player_x {
             player_play("X", &mut board);
         } else {
             player_play("O", &mut board);
@@ -51,10 +50,10 @@ fn main() {
             println!("It's a tie!");
             is_playing = false;
         } else {
-            isPlayerX = !isPlayerX;
+            is_player_x = !is_player_x;
         }
         let mut input: String = String::new();
-            std::io::stdin().read_line(&mut input).expect("Failed to read input");
+        std::io::stdin().read_line(&mut input).expect("Failed to read input");
     }
 
     clearscreen::clear().expect("Failed to clear screen");
@@ -64,11 +63,11 @@ fn player_play<'a>(player: &'a str, board: &mut [&'a str; 9]) {
     loop {
         clearscreen::clear().expect("Failed to clear screen");
         tic_tac_toe::print_board(*board);
-        print!("\n\n Please write the number of the position you want to place your {}: ", player);
+        print!("\n\n Please write the number of the position you want to place your {}: \n\n", player);
     
         for position in BoardPositions::iter() {
             if board[position as usize] == " " {
-                println!("{:?}", position);
+                println!("{}", position);
             }
         }
         println!("\n");
