@@ -5,23 +5,23 @@ mod tic_tac_toe;
 
 #[derive(Debug, Display, EnumIter, Clone, Copy)]
 enum BoardPositions {
-    #[strum(serialize = "Top Left: 1")]
+    #[strum(serialize = "1: Top Left")]
     TopLeft,
-    #[strum(serialize = "Top Center: 2")]
+    #[strum(serialize = "2: Top Center")]
     TopCenter,
-    #[strum(serialize = "Top Right: 3")]
+    #[strum(serialize = "3: Top Right")]
     TopRight,
-    #[strum(serialize = "Center Left: 4")]
+    #[strum(serialize = "4: Center Left")]
     CenterLeft,
-    #[strum(serialize = "Center: 5")]
+    #[strum(serialize = "5: Center")]
     Center,
-    #[strum(serialize = "Center Right: 6")]
+    #[strum(serialize = "6: Center Right")]
     CenterRight,
-    #[strum(serialize = "Bottom Left: 7")]
+    #[strum(serialize = "7: Bottom Left")]
     BottomLeft,
-    #[strum(serialize = "Bottom Center: 8")]
+    #[strum(serialize = "8: Bottom Center")]
     BottomCenter,
-    #[strum(serialize = "Bottom Right: 9")]
+    #[strum(serialize = "9: Bottom Right")]
     BottomRight
 }
 
