@@ -4,7 +4,7 @@ use std::{write, io::{self}};
 
 mod tic_tac_toe;
 
-#[derive(Debug, Display, EnumIter)]
+#[derive(Debug, Display, EnumIter, Clone, Copy)]
 enum BoardPositions {
     #[strum(serialize = "Top Left: 1")]
     TopLeft,
@@ -28,27 +28,55 @@ enum BoardPositions {
 
 fn main() {
 
-    let is_playing = true;
+    let mut is_playing = true;
     let mut board = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
     let mut isPlayerX = true;
 
     while is_playing {
         clearscreen::clear().expect("Failed to clear screen");
-        tic_tac_toe::print_board(board);
         
         if isPlayerX {
-            player_play("X");
+            player_play("X", &mut board);
         } else {
-            player_play("O");
+            player_play("O", &mut board);
+        }
+
+        is_playing = false;
+    }
+}
+
+fn player_play<'a>(player: &'a str, board: &mut [&'a str; 9]) {
+    loop {
+        clearscreen::clear().expect("Failed to clear screen");
+        tic_tac_toe::print_board(*board);
+        print!("\n\n Please write the number of the position you want to place your {}: ", player);
+    
+        for position in BoardPositions::iter() {
+            if board[position as usize] == " " {
+                println!("{:?}", position);
+            }
+        }
+        println!("\n");
+        let mut input: String = String::new();
+        std::io::stdin().read_line(&mut input).expect("Failed to read input");
+        let position: usize = input.trim().parse().expect("Please enter a valid number");
+        if is_valid_move(position, board) {
+            board[position - 1] = player;
+            break;
+        } else {
+            println!("Invalid move. Please try again.");
+            std::io::stdin().read_line(&mut input).expect("Failed to read input");
         }
     }
 }
 
-fn player_play(player: &str, ) {
-    println!("\n\n Please write where you want to place your {} \n", player);
-
-    for position in BoardPositions::iter() {
-        println!("{}", position);
+fn is_valid_move(position: usize, board: &[&str; 9]) -> bool {
+    if position - 1 > 8 {
+        return false;
     }
+    if board[position - 1] != " " {
+        return false;
+    }
+    true
 }
